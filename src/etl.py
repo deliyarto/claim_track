@@ -183,6 +183,15 @@ def cohort_tracking(hist: pd.DataFrame, base_snap: pd.Timestamp) -> tuple[pd.Dat
         return "Tidak muncul lagi"
 
     members["outcome"] = members["Nomor Registrasi APS"].map(outcome_of)
-    members["hari_sampai_diajukan"] = members["Nomor Registrasi APS"].map(first_diajukan)
+    if first_diajukan.empty:
+        # Tidak ada satupun anggota kohort yang pernah berstatus "Sudah diajukan"
+        # (misal karena filter mempersempit banget, atau baseline-nya terlalu baru).
+        # groupby kosong di pandas mengembalikan Series datetime64 kosong, dan me-map-kan
+        # itu ke kolom lain bisa memicu TypeError saat pandas coba menyamakan dtype.
+        # Jadi di-skip saja: seluruh kolom diisi NaT (kosong).
+        members["hari_sampai_diajukan"] = pd.NaT
+    else:
+        members["hari_sampai_diajukan"] = members["Nomor Registrasi APS"].map(first_diajukan)
+    members["hari_sampai_diajukan"] = pd.to_datetime(members["hari_sampai_diajukan"], errors="coerce")
     members["hari_sampai_diajukan"] = (members["hari_sampai_diajukan"] - base_snap).dt.days
     return traj, members
