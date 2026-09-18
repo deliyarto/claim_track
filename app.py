@@ -57,9 +57,9 @@ with st.expander("📂 Kelola File Data Snapshot", expanded=(len(existing_files)
         "(mis. `Daftar_Peserta_Layanan_16_09_2026.xlsx`)."
     )
     st.info(
-        "☁️ **Jika app ini berjalan di Streamlit Community Cloud**: penyimpanan bersifat sementara "
-        "(ephemeral). File yang diupload di sini bisa hilang saat app di-restart, di-redeploy, atau "
-        "tidur karena lama tidak diakses — jadi simpan juga salinan file `.xlsx` asli di komputer/Allcare, "
+        "Penyimpanan bersifat sementara "
+        "(ephemeral). File yang diupload di sini akan hilang saat app di-restart, di-redeploy, atau "
+        "tidur karena lama tidak diakses — jadi simpan juga salinan file `.xlsx` asli di PC, "
         "dan upload ulang di sini bila datanya sudah tidak muncul.",
         icon="☁️",
     )
