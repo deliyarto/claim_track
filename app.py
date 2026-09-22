@@ -159,7 +159,7 @@ if st.sidebar.button("🔄 Muat ulang data dari folder data/", use_container_wid
     st.rerun()
 
 tab_koh, tab_snap, tab_rekap = st.tabs(
-    ["🧬 Pelacakan Kohort", "🔄 Snapshot Comparison", "📋 Rekap Status"]
+    ["🧬 Pelacakan Noreg APS", "🔄 Snapshot Comparison", "📋 Rekap Status"]
 )
 
 # ================================================================ TAB 1: KOHORT
