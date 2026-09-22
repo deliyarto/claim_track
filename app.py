@@ -165,7 +165,7 @@ tab_koh, tab_snap, tab_rekap = st.tabs(
 # ================================================================ TAB 1: KOHORT
 with tab_koh:
     st.markdown(
-        "Kohort = semua registrasi yang **belum diajukan** pada snapshot baseline. "
+        "No Registrasi Dipantau = semua registrasi yang **belum diajukan** pada snapshot baseline. "
         "Aplikasi mengunci nomor-nomor itu lalu menelusuri nasibnya di semua snapshot berikutnya."
     )
     base_snap = st.selectbox(
