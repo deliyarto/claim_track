@@ -29,7 +29,7 @@ DATA_DIR = Path(__file__).parent / "data"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 # ================================================================ header
-st.title("🧾 Monitoring Status Registrasi APS, Snapshot Comparison & Rekap Status")
+st.title("Monitoring Status Registrasi APS")
 st.caption(
     "Data berbasis snapshot download harian/mingguan dari Allcare. "
     "Waktu siklus adalah estimasi dari selisih snapshot, bukan timestamp aktual penerbitan."
