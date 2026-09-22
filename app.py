@@ -192,7 +192,7 @@ with tab_koh:
         gone = members[members["outcome"] == "Tidak muncul lagi"]
 
         c1, c2, c3, c4 = st.columns(4)
-        c1.metric("Ukuran kohort", f"{n:,}")
+        c1.metric("Jumlah No Registrasi Dipantau", f"{n:,}")
         c2.metric("Sudah diajukan", f"{len(resolved):,}", f"{len(resolved)/n*100:.0f}%")
         c3.metric("Masih backlog", f"{len(still):,}", f"{len(still)/n*100:.0f}%")
         c4.metric("Tidak muncul lagi di export", f"{len(gone):,}",
