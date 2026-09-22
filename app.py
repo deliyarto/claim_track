@@ -169,7 +169,7 @@ with tab_koh:
         "Aplikasi mengunci nomor-nomor itu lalu menelusuri nasibnya di semua snapshot berikutnya."
     )
     base_snap = st.selectbox(
-        "Snapshot baseline (titik nol kohort)",
+        "Snapshot baseline (titik Awal Pelacakan)",
         snap_dates[:-1],
         index=0,
         format_func=lambda d: f"{d:%d %b %Y}",
