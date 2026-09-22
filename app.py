@@ -29,7 +29,7 @@ DATA_DIR = Path(__file__).parent / "data"
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 # ================================================================ header
-st.title("🧾 Monitoring Register APS")
+st.title("🧾 Monitoring Tagihan — Kohort, Snapshot Comparison & Rekap Status")
 st.caption(
     "Data berbasis snapshot download harian/mingguan dari Allcare. "
     "Waktu siklus adalah estimasi dari selisih snapshot, bukan timestamp aktual penerbitan."
@@ -57,9 +57,9 @@ with st.expander("📂 Kelola File Data Snapshot", expanded=(len(existing_files)
         "(mis. `Daftar_Peserta_Layanan_16_09_2026.xlsx`)."
     )
     st.info(
-        "Penyimpanan bersifat sementara "
-        "(ephemeral). File yang diupload di sini akan hilang saat app di-restart, di-redeploy, atau "
-        "tidur karena lama tidak diakses — jadi simpan juga salinan file `.xlsx` asli di PC, "
+        "☁️ **Jika app ini berjalan di Streamlit Community Cloud**: penyimpanan bersifat sementara "
+        "(ephemeral). File yang diupload di sini bisa hilang saat app di-restart, di-redeploy, atau "
+        "tidur karena lama tidak diakses — jadi simpan juga salinan file `.xlsx` asli di komputer/Allcare, "
         "dan upload ulang di sini bila datanya sudah tidak muncul.",
         icon="☁️",
     )
@@ -199,22 +199,38 @@ with tab_koh:
                   help="Registrasi baseline yang tidak ada lagi di snapshot-snapshot berikutnya. "
                        "Bisa jadi sudah selesai dikeluarkan dari daftar export Allcare, atau export terpotong rentangnya.")
 
-        col_a, col_b = st.columns([3, 2])
-        with col_a:
-            st.markdown("#### Trajektori kohort per snapshot")
-            tplot = traj.copy()
-            tplot["snapshot_date"] = tplot["snapshot_date"].dt.strftime("%d %b")
-            tplot = tplot.set_index("snapshot_date")
-            st.bar_chart(tplot)
+        # NOTE: "Median waktu penyelesaian" sengaja dinonaktifkan sementara (lihat blok
+        # ter-comment di bawah). Makanya grafik trajektori dibuat full-width dulu di sini.
+        st.markdown("#### Trajektori kohort per snapshot")
+        tplot = traj.copy()
+        tplot["snapshot_date"] = tplot["snapshot_date"].dt.strftime("%d %b")
+        tplot = tplot.set_index("snapshot_date")
+        st.bar_chart(tplot)
 
-        with col_b:
-            st.markdown("#### Median waktu penyelesaian")
-            if len(resolved):
-                st.metric("Baseline → terlihat 'Sudah diajukan'", f"{resolved['hari_sampai_diajukan'].median():.0f} hari")
-                st.bar_chart(resolved["hari_sampai_diajukan"].clip(lower=0).value_counts().sort_index())
-                st.caption("⚠️ Estimasi batas bawah: tagihan bisa jadi sudah diajukan sebelum snapshot berikutnya menangkapnya.")
-            else:
-                st.info("Belum ada anggota kohort yang terlihat 'Sudah diajukan'.")
+        # ---------------------------------------------------------------
+        # NONAKTIF SEMENTARA — "Median waktu penyelesaian"
+        # Alasan: sementara tidak ditampilkan dulu ke tim. Untuk mengaktifkan
+        # lagi: hapus tanda pagar (#) di awal tiap baris pada blok di bawah ini,
+        # lalu kembalikan layout dua kolom (col_a, col_b) di atas seperti semula
+        # supaya grafik trajektori & median tampil berdampingan.
+        # ---------------------------------------------------------------
+        # col_a, col_b = st.columns([3, 2])
+        # with col_a:
+        #     st.markdown("#### Trajektori kohort per snapshot")
+        #     tplot = traj.copy()
+        #     tplot["snapshot_date"] = tplot["snapshot_date"].dt.strftime("%d %b")
+        #     tplot = tplot.set_index("snapshot_date")
+        #     st.bar_chart(tplot)
+        #
+        # with col_b:
+        #     st.markdown("#### Median waktu penyelesaian")
+        #     if len(resolved):
+        #         st.metric("Baseline → terlihat 'Sudah diajukan'", f"{resolved['hari_sampai_diajukan'].median():.0f} hari")
+        #         st.bar_chart(resolved["hari_sampai_diajukan"].clip(lower=0).value_counts().sort_index())
+        #         st.caption("⚠️ Estimasi batas bawah: tagihan bisa jadi sudah diajukan sebelum snapshot berikutnya menangkapnya.")
+        #     else:
+        #         st.info("Belum ada anggota kohort yang terlihat 'Sudah diajukan'.")
+        # ---------------------------------------------------------------
 
         st.markdown("#### Daftar anggota kohort & outcome")
         outcome_order = {"Sudah diajukan": 0, "Masih backlog": 1, "Tidak muncul lagi": 2}
