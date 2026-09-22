@@ -201,7 +201,7 @@ with tab_koh:
 
         # NOTE: "Median waktu penyelesaian" sengaja dinonaktifkan sementara (lihat blok
         # ter-comment di bawah). Makanya grafik trajektori dibuat full-width dulu di sini.
-        st.markdown("#### Trajektori kohort per snapshot")
+        st.markdown("#### Trajektori Status per snapshot")
         tplot = traj.copy()
         tplot["snapshot_date"] = tplot["snapshot_date"].dt.strftime("%d %b")
         tplot = tplot.set_index("snapshot_date")
