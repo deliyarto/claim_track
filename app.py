@@ -174,7 +174,7 @@ with tab_koh:
         format_func=lambda d: f"{d:%d %b %Y}",
     )
     hanya_bernilai = st.checkbox(
-        "Hanya kohort dengan nilai tagihan > Rp 0",
+        "Hanya No.Reg APS dengan nilai tagihan > Rp 0",
         value=True,
         help="Centang untuk mengecualikan registrasi yang Subtotal Biayanya masih 0 (belum ada rincian tagihan).",
     )
